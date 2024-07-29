@@ -1,0 +1,117 @@
+단순 노가다 및 빡구현 문제
+
+고려할 상황이 많아서 구현하는 시간보다 나올 수 있는 모든 상황의 수를 세는게 더 오래걸림
+
+고려할 상황 :
+6번 색종이는 판 하나는 다 써야하니 count에 그대로 더해줌
+5번 색종이는 판 하나당 한 개가 들어가고 나머지 11칸을 1번 색종이로 채울 수 있음
+4번 색종이는 판 하나당 한 개가 들어가고 나머지 공간에 2번 색종이 5개가 들어갈 수 있음
+- 만약 2번 색종이가 5개 미만이라면 2번 색종이 남은 것 다 쓰고 남은 칸 1번 색종이로 채우면 됨
+3번 색종이는 4개 이상이라면 전부 다 사용해서 판 한 개 사용
+3번 색종이가 3개면 2번 색종이 한 개, 1번 색종이 5개 or 1번 색종이 9개
+3번 색종이가 2개면 2번 색종이 3개, 1번 색종이 6개 or 2번 색종이 2개, 1번 색종이 10개 or 2번 색종이 1개, 1번 색종이 14개 or 1번 색종이 18개
+3번 색종이가 1개면 2번 색종이 5개, 1번 색종이 7개 or 2번 색종이 4개, 1번 색종이 11개 or 2번 3개, 1번 15개 or 2번 2개 1번 19개 or 2번 1개 1번 23개 or 1번 27개
+2번 색종이는 최대 9개, 2번 색종이가 남은게 9개 미만이라면 남은 칸 1개로 채우기
+
+처음엔 각 색종이 별로 while문을 돌리며 꽤 많은 조건문을 실행했으나 제출해보니 시간초과가 나왔다.
+#include<iostream>
+
+using namespace std;
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
+	int one, two, three, four, five, six;
+	cin >> one >> two >> three >> four >> five >> six;
+	int cnt = 0;
+	cnt += six;	
+	int square;
+	while (one!=0 ||two!=0 || three!= 0 ||four!=0 ||five!=0) {		
+		while (five > 0) {
+			square = 36;
+			five--;
+			if (one <= square)
+				one = 0;
+			else one -= square;
+			cnt++;
+		}
+		while (four > 0) {
+			square = 36;
+			four--;
+			if (two > 5) {
+				two -= 5;
+				square -= 20;
+			}
+			else {
+				square -= 4 * two;
+				two = 0;
+			}
+			if (one <= square)one -= square;
+			cnt++;
+		}
+		while (three > 0) {
+			square = 36;
+			if (three > 4) {
+				three -= 4;
+				square = 0;
+			}
+			else {
+				square -= 9 * three;
+				three = 0;
+			}
+			if (square == 27 && two > 5) {
+				two -= 5;
+				square -= 20;
+			}
+			else if (square == 27 && two <= 5) {
+				square -= 4 * two;
+				two = 0;
+			}
+			if (square == 18 && two > 3) {
+				two -= 3;
+				square -= 12;
+			}
+			else if (square == 18 && two <= 3) {
+				square -= 4 * two;
+				two = 0;
+			}
+			if (square == 9 && two >= 1) {
+				square -= 4 * two;
+				two = 0;
+			}
+			if (one <= square) one = 0;
+			else one -= square;
+			cnt++;
+		}
+		while (two > 8) {
+			int square = 36;
+			if (two > 9)
+			{
+				two -= 9;
+				square = 0;
+			}
+			else
+			{
+				square -= 4 * two;
+				two = 0;
+			}
+			if (one <= square)
+				one = 0;
+			else
+				one -= square;
+			cnt++;
+		}
+		while (one > 0) {
+			if (one > 36) one -= 36;
+			else one = 0;
+			cnt++;
+		}
+	}
+	cout << cnt << '\n';
+	return 0;
+}
+
+처음 작성했던 코드
+
+시간 초과를 없애기 위해 while문을 과감히 없애고 한 번에 계산해서 판 수를 카운트하는 방식으로 코드 구현함
+분명 쉬운 문제인데 상당히 오래걸림
