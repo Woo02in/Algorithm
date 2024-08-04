@@ -1,0 +1,13 @@
+간단한 투 포인터 문제이지만  
+while (left <= right && right < N) {		
+	if(tmp < S) {
+		tmp += v[++right];			
+	}
+	else {
+		answer = min(answer, right - left + 1);
+		tmp -= v[left];
+		left++;
+	}
+}
+이 로직에 있어서
+처음에 tmp += v[right]; right++; 로 풀었다가 73%에서 틀렸습니다 가 나오고 고민하던 중 ++right로 하면 해결 된다는 것을 깨달음
