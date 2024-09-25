@@ -1,13 +1,18 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 #include<string>
 
 using namespace std;
 string s;
+int result = 0;
+bool flag;
+
 int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
 	cin >> s;
-	int result = 0;
-	bool flag = 0;
+	
 	string tmp = "";
 	for (int i = 0; i <= s.size(); i++) {
 		if (s[i] == '+' || s[i] == '-' || s[i] == '\0') {
@@ -23,7 +28,7 @@ int main() {
 		}
 		tmp += s[i];
 	}
-	printf("%d", result);
+	cout << result << '\n';
 	return 0;
 }
 
