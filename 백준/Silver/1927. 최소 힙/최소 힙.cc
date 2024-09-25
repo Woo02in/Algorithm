@@ -1,23 +1,26 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include<stdio.h>
+#include<iostream>
+#include<algorithm>
 #include<queue>
 
 using namespace std;
 
-int n;
+int n, T;
 int main() {
-	int T;
-	scanf("%d", &T);
-	priority_queue<int, vector<int>,greater<int>>pq;
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+	
+	priority_queue<int, vector<int>, greater<int>>pq;
+	cin >> T;
 
-	for (int i = 0; i < T; i++) {
-		scanf("%d", &n);
+	while(T--){
+		cin >> n;
 		if (n == 0) {
 			if (pq.empty()) {
-				printf("0\n");
+				cout << '0' << '\n';
 			}
 			else {
-				printf("%d\n", pq.top());
+				cout << pq.top() << '\n';
 				pq.pop();
 			}
 		}
@@ -25,6 +28,5 @@ int main() {
 			pq.push(n);
 		}
 	}
-
 	return 0;
 }
