@@ -1,34 +1,45 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include<stdio.h>
-int map[130][130];
-int white, blue;
-void compute(int N, int x,int y) {
-	int cur = map[x][y];
-	for (int i = x; i < x + N; i++) {
-		for (int j = y; j < y + N; j++) {
-			if (cur != map[i][j]) {
-				compute(N / 2, x, y);
-				compute(N / 2, x + N / 2, y);
-				compute(N / 2, x, y + N / 2);
-				compute(N / 2, x + N / 2, y + N / 2);
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+
+int N, white, blue;
+int map[129][129];
+
+void cal(int N, int row, int col) {
+	int color = map[row][col];
+	for (int i = row; i < N + row; i++) {
+		for (int j = col; j < col + N; j++) {
+			if (map[i][j] != color) {
+				cal(N / 2, row, col + N / 2);
+				cal(N / 2, row, col);
+				cal(N / 2, row + N / 2, col);
+				cal(N / 2, row + N / 2, col + N / 2);
 				return;
 			}
 		}
 	}
-	if (cur) blue++;
-	else white++;
+	if (color) {
+		blue++;
+	}
+	else {
+		white++;
+	}
+	return;
 }
 
 int main() {
-	int N;
-	scanf("%d", &N);
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			scanf("%d", &map[i][j]);
+	cin.sync_with_stdio(0);
+	cin.tie(0);
+	cout.tie(0);
+
+	cin >> N;
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= N; j++) {
+			cin >> map[i][j];
 		}
 	}
-	compute(N, 0, 0);
-	printf("%d\n%d", white, blue);
-
+	cal(N, 1, 1);
+	cout << white << '\n' << blue;
 	return 0;
 }
