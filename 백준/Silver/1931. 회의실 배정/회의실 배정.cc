@@ -1,13 +1,12 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include<stdio.h>
+#include<iostream>
 #include<algorithm>
 #include<utility>
 #include<vector>
 using namespace std;
 
-
 int N;
 vector<pair<int, int>> v;
+
 bool cmp(pair<int, int> a, pair<int, int> b) {
 	if (a.second == b.second) {
 		return a.first < b.first;
@@ -16,22 +15,22 @@ bool cmp(pair<int, int> a, pair<int, int> b) {
 }
 
 int main() {
-	scanf("%d", &N);
+	cin >> N;
 	int start, end;
 	for (int i = 0; i < N; i++) {
-		scanf("%d %d", &start, &end);
+		cin >> start >> end;
 		v.push_back({ start,end });
 	}
 
-	sort(v.begin(), v.end(),cmp);
+	sort(v.begin(), v.end(), cmp);
 
 	int time = 0, cnt = 0;
 	for (int i = 0; i < N; i++) {
 		if (time <= v[i].first) {
 			time = v[i].second;
 			cnt++;
-		}	
+		}
 	}
-	printf("%d", cnt);
+	cout << cnt << '\n';
 	return 0;
 }
